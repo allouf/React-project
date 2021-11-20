@@ -29,8 +29,7 @@ import { Card, CardImg, CardText, CardBody,
   
     handleSubmit(values) {
       this.toggleModal();
-      console.log('Current State is: ' + JSON.stringify(values));
-      alert('Current State is: ' + JSON.stringify(values));
+      this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
   
     render() {
@@ -115,7 +114,7 @@ import { Card, CardImg, CardText, CardBody,
     }
   }
 
-  function RenderComments({comments}){
+  function RenderComments({comments, addComment, dishId}) {
         if(comments !=null){
             const commentsList = comments.map(
                 (arrayItem, arrayItemIndex, wholeArray) => { return(
@@ -138,7 +137,7 @@ import { Card, CardImg, CardText, CardBody,
                     </ul>
                 </div>
                 <div>
-                    <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment} />
                 </div>
                 </div>
             );
@@ -189,7 +188,9 @@ import { Card, CardImg, CardText, CardBody,
                         <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments}/>
+                    <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id}/>
                     </div>
                 </div>
                 </div>
